@@ -1,4 +1,4 @@
-package siarhei.pashkou.sockerserver;
+package siarhei.pashkou.socketserver;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -6,6 +6,8 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import siarhei.pashkou.socketservice.SocketService;
 
 public class SocketServer {
 	private int port;
@@ -42,8 +44,10 @@ public class SocketServer {
 			@Override
 			public void run() {
 				try {
-					Socket socket = sSocket.accept();
-					service.server(socket);
+					while(running){
+						Socket socket = sSocket.accept();
+						executorService.execute(() -> service.serve(socket));
+					}
 				} catch (IOException e) {
 					if(running)
 						e.printStackTrace();
@@ -55,10 +59,10 @@ public class SocketServer {
 	}
 
 	public void stop() throws IOException, InterruptedException {
-		executorService.shutdown();
-		executorService.awaitTermination(200, TimeUnit.MILLISECONDS);
 		sSocket.close();
 		running = false;
+		executorService.awaitTermination(100, TimeUnit.MILLISECONDS);
+		executorService.shutdown();
 	}
 
 	public boolean isRunning() {

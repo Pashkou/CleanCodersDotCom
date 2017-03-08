@@ -1,9 +1,9 @@
-package siarhei.pashkou.sockerserver;
+package siarhei.pashkou.socketservice;
 
 import java.net.Socket;
 
 public interface SocketService {
 	int getConnections();
-	void server(Socket s);
+	void serve(Socket s);
 	String getMessage();
 }

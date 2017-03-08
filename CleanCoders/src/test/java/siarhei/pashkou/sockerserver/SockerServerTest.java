@@ -11,6 +11,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import siarhei.pashkou.socketserver.SocketServer;
+import siarhei.pashkou.socketservice.ClosingSocketService;
+import siarhei.pashkou.socketservice.ReadingSocketService;
+import siarhei.pashkou.socketservice.SocketService;
+
 public class SockerServerTest {
 
 	private int port = 8042;
@@ -19,7 +24,7 @@ public class SockerServerTest {
 
 	@Before
 	public void setUp() throws IOException{
-		socketService = new FackeSocketService();
+		socketService = new ClosingSocketService();
 		socketServer = new SocketServer(port , socketService);
 	}
 	
@@ -47,15 +52,35 @@ public class SockerServerTest {
 	public void acceptAnIncomingConnection() throws IOException, InterruptedException{
 		socketServer.start();
 		new Socket("localhost", port);
+		synchronized (socketService) { socketService.wait(); }
 		socketServer.stop();
 		assertEquals(1, socketService.getConnections());
 	}
 	
 	@Test
+	@SuppressWarnings("resource")
+	public void acceptAnMultipleConnection() throws IOException, InterruptedException{
+		socketServer.start();
+		new Socket("localhost", port);
+		synchronized (socketService) { socketService.wait(); }
+		new Socket("localhost", port);
+		synchronized (socketService) { socketService.wait(); }
+		new Socket("localhost", port);
+		synchronized (socketService) { socketService.wait(); }
+		new Socket("localhost", port);
+		synchronized (socketService) { socketService.wait(); }
+		socketServer.stop();
+		assertEquals(4, socketService.getConnections());
+	}
+	
+	@Test
 	public void canSendAndRecieveData() throws IOException, InterruptedException{
+		socketService = new ReadingSocketService(); 
+		socketServer.setService(socketService);
 		socketServer.start();
 		Socket clientSocket = new Socket("localhost", port);
 		clientSocket.getOutputStream().write("Hello\n".getBytes());
+		synchronized (socketService) { socketService.wait(); }
 		socketServer.stop();
 		assertEquals("Hello", socketService.getMessage());
 	}
