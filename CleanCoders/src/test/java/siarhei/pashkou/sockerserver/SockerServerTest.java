@@ -4,7 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.Socket;
 
 import org.junit.After;
@@ -13,6 +16,7 @@ import org.junit.Test;
 
 import siarhei.pashkou.socketserver.SocketServer;
 import siarhei.pashkou.socketservice.ClosingSocketService;
+import siarhei.pashkou.socketservice.EchoSocketService;
 import siarhei.pashkou.socketservice.ReadingSocketService;
 import siarhei.pashkou.socketservice.SocketService;
 
@@ -36,7 +40,6 @@ public class SockerServerTest {
 	@Test
 	public void instanciate(){
 		assertEquals(port, socketServer.getPort());
-		assertEquals(socketService, socketServer.getService());
 	}
 	
 	@Test
@@ -82,7 +85,25 @@ public class SockerServerTest {
 		clientSocket.getOutputStream().write("Hello\n".getBytes());
 		synchronized (socketService) { socketService.wait(); }
 		socketServer.stop();
+		clientSocket.close();
 		assertEquals("Hello", socketService.getMessage());
+	}
+
+	@Test
+	public void canSendAndRecieveEchoData() throws IOException, InterruptedException{
+		socketService = new EchoSocketService(); 
+		socketServer.setService(socketService);
+		socketServer.start();
+		Socket clientSocket = new Socket("localhost", port);
+		clientSocket.getOutputStream().write("Hello\n".getBytes());
+		synchronized (socketService) { socketService.wait(); }
+		InputStream is = clientSocket.getInputStream();
+		InputStreamReader isr = new InputStreamReader(is);
+		BufferedReader br = new BufferedReader(isr);
+		String echoLine = br.readLine();
+		socketServer.stop();
+		clientSocket.close();
+		assertEquals("Hello", echoLine);
 	}
 	
 }

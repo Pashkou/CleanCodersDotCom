@@ -4,6 +4,6 @@ import java.net.Socket;
 
 public interface SocketService {
 	int getConnections();
-	void serve(Socket s);
 	String getMessage();
+	void serve(Socket s);
 }

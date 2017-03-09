@@ -11,16 +11,15 @@ import siarhei.pashkou.socketservice.SocketService;
 
 public class SocketServer {
 	private int port;
-	private SocketService service;
 	private ServerSocket sSocket;
-	private boolean running;
 	private ExecutorService executorService;
+	private ConnectionHandler connectionHandler;
 	
 	public SocketServer(int port, SocketService service) throws IOException {
 		this.setPort(port);
-		this.setService(service);
 		sSocket = new ServerSocket(port);
 		executorService = Executors.newFixedThreadPool(4);
+		connectionHandler = new ConnectionHandler(sSocket, service, executorService, false);
 	}
 
 	public int getPort() {
@@ -31,42 +30,24 @@ public class SocketServer {
 		this.port = port;
 	}
 
-	public SocketService getService() {
-		return service;
-	}
-
 	public void setService(SocketService service) {
-		this.service = service;
+		connectionHandler.setService(service);
 	}
 
 	public void start() throws IOException {
-		Runnable connectionHandler = new Runnable() {
-			@Override
-			public void run() {
-				try {
-					while(running){
-						Socket socket = sSocket.accept();
-						executorService.execute(() -> service.serve(socket));
-					}
-				} catch (IOException e) {
-					if(running)
-						e.printStackTrace();
-				}
-			}
-		};
+		connectionHandler.setRunning(true);
 		executorService.execute(connectionHandler);
-		running = true;
 	}
 
 	public void stop() throws IOException, InterruptedException {
 		sSocket.close();
-		running = false;
+		connectionHandler.setRunning(false);
 		executorService.awaitTermination(100, TimeUnit.MILLISECONDS);
 		executorService.shutdown();
 	}
 
 	public boolean isRunning() {
-		return running;
+		return connectionHandler.isRunning();
 	}
 
 }
