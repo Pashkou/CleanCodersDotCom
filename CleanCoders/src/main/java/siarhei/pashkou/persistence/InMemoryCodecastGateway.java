@@ -17,8 +17,14 @@ public class InMemoryCodecastGateway extends CodecastGatewayUtilities implements
 	@Override
 	public List<Codecast> findAllCodecastsSortedByDate() {
 		return findAll().stream()
-				.sorted((c1, c2) -> c1.getPublished().compareTo(c2.getPublished()))
+				.sorted((c1, c2) -> c1.getPublishedDate().compareTo(c2.getPublishedDate()))
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public Codecast findCodecastByPermalink(String permalink) {
+		return findAll().stream()
+				.filter(c -> permalink.equals(c.getPermalink()))
+				.findAny().orElse(null);
+	}
 }

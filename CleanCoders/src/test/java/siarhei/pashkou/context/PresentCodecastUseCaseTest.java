@@ -103,7 +103,7 @@ public class PresentCodecastUseCaseTest {
 		
 		PresentableCodecast pCodecast = pCodecasts.get(0);
 		assertEquals("This is codecast", pCodecast.title);
-		assertEquals("05/03/2017", pCodecast.published);
+		assertEquals("05/03/2017", pCodecast.publishedDate);
 		
 	}
 

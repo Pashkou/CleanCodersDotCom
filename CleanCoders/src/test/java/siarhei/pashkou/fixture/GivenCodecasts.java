@@ -41,6 +41,7 @@ public class GivenCodecasts {
 		Codecast codecast = new Codecast();
 		codecast.setTitle(title);
 		codecast.setPublished(published);
+		codecast.setPermalink(permalink);
 		Context.codecastGateway.saveCodecast(codecast);
 	}
 }

@@ -16,7 +16,7 @@ public class OfCodeCasts {
 		List<PresentableCodecast> presentableCodecasts = new PresentCodecastUseCase().presentCodecasts(Context.gateKepper.getLogedInUser());
 		List<Object> queryResponse = new ArrayList<>();
 		for(PresentableCodecast pC: presentableCodecasts){
-			queryResponse.add(makeRow(pC.title, pC.published, "picture", "description", pC.isViewable, pC.isDownloadable));
+			queryResponse.add(makeRow(pC.title, pC.publishedDate, "picture", "description", pC.isViewable, pC.isDownloadable));
 		}
 		return queryResponse;
 	}

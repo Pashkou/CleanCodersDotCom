@@ -9,4 +9,5 @@ public interface CodecastGateway {
 	void delete(Codecast codecast);
 	Codecast findCodecastByTitle(String codecastTitle);
 	List<Codecast> findAllCodecastsSortedByDate();
+	Codecast findCodecastByPermalink(String permalink);
 }

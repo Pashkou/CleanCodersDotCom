@@ -30,7 +30,7 @@ public class ContextSetup {
 		
 		Codecast episode2 = new Codecast();
 		episode2.setTitle("Episode 2 - The continuetion");
-		episode2.setPublished(episode1.getPublished().plusDays(1));
+		episode2.setPublished(episode1.getPublishedDate().plusDays(1));
 		Context.codecastGateway.saveCodecast(episode2);
 		
 		License sergeiE1 = new License(LicenseType.VIEWABLE, user, episode1);

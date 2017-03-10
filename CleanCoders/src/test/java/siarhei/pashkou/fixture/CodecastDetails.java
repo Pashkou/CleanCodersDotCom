@@ -1,24 +1,29 @@
 package siarhei.pashkou.fixture;
 
 import siarhei.pashkou.context.Context;
+import siarhei.pashkou.context.PresentableCodecastDetails;
 import siarhei.pashkou.usecases.CodecastDetailsUseCase;
 
 public class CodecastDetails {
+	private PresentableCodecastDetails details;
+
 	public boolean requestCodecast(String permalink){
 		CodecastDetailsUseCase codecastDetailsUseCase = new CodecastDetailsUseCase();
-		codecastDetailsUseCase.requestCodecastDetails(Context.gateKepper.getLogedInUser(), permalink);
-		return false;
+		details = codecastDetailsUseCase.requestCodecastDetails(Context.gateKepper.getLogedInUser(), permalink);
+		return true;
 	}
 	
 	public String codecastDetailsTitle(){
-		return "";
+		return details.presentableCodecast.title;
 	}
 	
 	public String codecastDetailsDate(){
-		return "";
+		return details.presentableCodecast.publishedDate;
 	}
 	
 	public boolean codecastDetailsOfferPurchaseOf(String licenseType){
-		return false;
+		return 
+				   (  (  licenseType.equals("viewing") && !details.presentableCodecast.isViewable  ) ||
+					  (  licenseType.equals("download") && !details.presentableCodecast.isDownloadable ));
 	}
 }

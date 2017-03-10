@@ -52,7 +52,7 @@ public class MainService implements SocketService {
 		for(PresentableCodecast codecast:codecasts){
 			ViewTemplate codecastTemplate = ViewTemplate.create("html/codecast.html");
 			codecastTemplate.replace("title", codecast.title);	
-			codecastTemplate.replace("publicationDate", codecast.published);	
+			codecastTemplate.replace("publicationDate", codecast.publishedDate);	
 			codecastView.append(codecastTemplate.getContent());
 		}
 		
