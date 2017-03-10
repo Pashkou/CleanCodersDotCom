@@ -1,7 +1,11 @@
 package siarhei.pashkou;
 
+import siarhei.pashkou.context.Context;
+
 public class CodecastDetails {
 	public boolean requestCodecast(String permalink){
+		CodecastDetailsUseCase codecastDetailsUseCase = new CodecastDetailsUseCase();
+		//codecastDetailsUseCase.requestCodecastDetails(Context. permalink);
 		return false;
 	}
 	

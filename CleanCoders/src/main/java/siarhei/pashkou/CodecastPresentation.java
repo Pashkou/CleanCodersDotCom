@@ -14,7 +14,7 @@ import siarhei.pashkou.model.User;
 public class CodecastPresentation {
 	
 	PresentCodecastUseCase useCase = new PresentCodecastUseCase();
-	public static GateKeeper gateKepper = new GateKeeper();
+	//public static GateKeeper gateKepper = new GateKeeper();
 	
 	public CodecastPresentation(){
 		ContextSetup.initializeContext();
@@ -34,7 +34,7 @@ public class CodecastPresentation {
 	public boolean loginUser(String username){	
 		User user = Context.userGateway.findUserByName(username);
 		if(user != null){
-			gateKepper.setLogedInUser(user);
+			Context.gateKepper.setLogedInUser(user);
 			return true;
 		}
 		return false;
@@ -57,12 +57,12 @@ public class CodecastPresentation {
 		return useCase.isLincenseForCodecast(LicenseType.DOWNLOADABLE, user, codecast);
 	}
 	public String presentationUser(){ 
-		return gateKepper.getLogedInUser().getUsername();
+		return Context.gateKepper.getLogedInUser().getUsername();
 	}
 	
 	
 	public int countOfCodecastsPresented(){	
-		List<PresentableCodecast> presentations = useCase.presentCodecasts(gateKepper.getLogedInUser());
+		List<PresentableCodecast> presentations = useCase.presentCodecasts(Context.gateKepper.getLogedInUser());
 		return presentations.size();
 	}
 }

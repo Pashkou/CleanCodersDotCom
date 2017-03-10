@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import siarhei.pashkou.License;
 import siarhei.pashkou.License.LicenseType;
 import siarhei.pashkou.context.Context;
+import siarhei.pashkou.context.GateKeeper;
 import siarhei.pashkou.model.Codecast;
 import siarhei.pashkou.model.User;
 import siarhei.pashkou.persistence.InMemoryCodecastGateway;
@@ -16,6 +17,7 @@ public class ContextSetup {
 		Context.userGateway = new InMemoryUserGateway();
 		Context.licenseGateway = new InMemoryLicenseGateway();
 		Context.codecastGateway = new InMemoryCodecastGateway();
+		Context.gateKepper = new GateKeeper();
 	}
 	
 	public static void setupSampleData(){
