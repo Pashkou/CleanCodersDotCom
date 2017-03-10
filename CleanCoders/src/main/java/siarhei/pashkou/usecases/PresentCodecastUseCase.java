@@ -1,13 +1,15 @@
-package siarhei.pashkou.context;
+package siarhei.pashkou.usecases;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import siarhei.pashkou.License;
-import siarhei.pashkou.License.LicenseType;
+import siarhei.pashkou.context.Context;
+import siarhei.pashkou.context.PresentableCodecast;
 import siarhei.pashkou.model.Codecast;
+import siarhei.pashkou.model.License;
 import siarhei.pashkou.model.User;
+import siarhei.pashkou.model.License.LicenseType;
 
 public class PresentCodecastUseCase {
 

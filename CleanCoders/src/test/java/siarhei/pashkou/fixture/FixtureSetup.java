@@ -1,4 +1,4 @@
-package siarhei.pashkou;
+package siarhei.pashkou.fixture;
 
 public class FixtureSetup {
 

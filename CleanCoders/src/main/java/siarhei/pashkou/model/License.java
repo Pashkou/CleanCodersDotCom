@@ -1,8 +1,4 @@
-package siarhei.pashkou;
-
-import siarhei.pashkou.model.Codecast;
-import siarhei.pashkou.model.Entity;
-import siarhei.pashkou.model.User;
+package siarhei.pashkou.model;
 
 public class License extends Entity {
 	private User user;

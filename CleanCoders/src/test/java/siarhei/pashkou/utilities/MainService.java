@@ -6,9 +6,9 @@ import java.util.List;
 
 import siarhei.pashkou.codecast.ContextSetup;
 import siarhei.pashkou.context.Context;
-import siarhei.pashkou.context.PresentCodecastUseCase;
 import siarhei.pashkou.context.PresentableCodecast;
 import siarhei.pashkou.socketservice.SocketService;
+import siarhei.pashkou.usecases.PresentCodecastUseCase;
 import siarhei.pashkou.views.ViewTemplate;
 
 public class MainService implements SocketService {

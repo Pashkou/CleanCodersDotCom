@@ -2,8 +2,8 @@ package siarhei.pashkou.persistence;
 
 import java.util.List;
 
-import siarhei.pashkou.License;
 import siarhei.pashkou.model.Codecast;
+import siarhei.pashkou.model.License;
 import siarhei.pashkou.model.User;
 
 public interface LicenseGateway {

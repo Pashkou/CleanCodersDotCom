@@ -2,12 +2,12 @@ package siarhei.pashkou.codecast;
 
 import java.time.LocalDate;
 
-import siarhei.pashkou.License;
-import siarhei.pashkou.License.LicenseType;
 import siarhei.pashkou.context.Context;
 import siarhei.pashkou.context.GateKeeper;
 import siarhei.pashkou.model.Codecast;
+import siarhei.pashkou.model.License;
 import siarhei.pashkou.model.User;
+import siarhei.pashkou.model.License.LicenseType;
 import siarhei.pashkou.persistence.InMemoryCodecastGateway;
 import siarhei.pashkou.persistence.InMemoryLicenseGateway;
 import siarhei.pashkou.persistence.InMemoryUserGateway;

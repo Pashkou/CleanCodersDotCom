@@ -1,4 +1,4 @@
-package siarhei.pashkou;
+package siarhei.pashkou.fixture;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

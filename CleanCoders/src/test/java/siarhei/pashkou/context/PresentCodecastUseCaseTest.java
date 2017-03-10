@@ -11,11 +11,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import siarhei.pashkou.License;
-import siarhei.pashkou.License.LicenseType;
 import siarhei.pashkou.codecast.ContextSetup;
 import siarhei.pashkou.model.Codecast;
+import siarhei.pashkou.model.License;
 import siarhei.pashkou.model.User;
+import siarhei.pashkou.model.License.LicenseType;
+import siarhei.pashkou.usecases.PresentCodecastUseCase;
 
 public class PresentCodecastUseCaseTest {
 	private PresentCodecastUseCase useCase;

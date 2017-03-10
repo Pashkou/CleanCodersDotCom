@@ -1,12 +1,12 @@
-package siarhei.pashkou;
+package siarhei.pashkou.fixture;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import siarhei.pashkou.context.Context;
-import siarhei.pashkou.context.PresentCodecastUseCase;
 import siarhei.pashkou.context.PresentableCodecast;
+import siarhei.pashkou.usecases.PresentCodecastUseCase;
 
 //OrderedQuery
 public class OfCodeCasts {
