@@ -25,4 +25,10 @@ public class CodecastTest {
 		assertEquals(LocalDate.now(), codecast.getPublishedDate());
 	}
 	
+	@Test
+	public void checkLanguage(){
+		System.out.println(System.getProperty("user.country")); 
+		System.out.println(System.getProperty("user.language"));
+	}
+	
 }

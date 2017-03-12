@@ -1,14 +1,15 @@
-package siarhei.pashkou.usecases;
+package siarhei.pashkou.usecases.codecastsummary;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import siarhei.pashkou.context.Context;
-import siarhei.pashkou.context.PresentableCodecast;
 import siarhei.pashkou.model.Codecast;
 import siarhei.pashkou.model.User;
+import siarhei.pashkou.presenter.CodecastPresenter;
+import siarhei.pashkou.usecases.CodecastUseCase;
 
-public class PresentCodecastUseCase extends CodecastUseCase {
+public class CodecastSummaryUseCase extends CodecastUseCase {
 
 	public List<PresentableCodecast> presentCodecasts(User logedInUser) {
 		List<Codecast> codecasts = Context.codecastGateway.findAllCodecastsSortedByDate();
@@ -20,7 +21,7 @@ public class PresentCodecastUseCase extends CodecastUseCase {
 	}
 
 	private void preparePresentationCodecast(User logedInUser, List<PresentableCodecast> presentableCodecats, Codecast codecast) {
-		PresentableCodecast pc = doFormat(logedInUser, codecast);
+		PresentableCodecast pc = new CodecastPresenter().doFormat(logedInUser, codecast);
 		presentableCodecats.add(pc);
 	}
 }

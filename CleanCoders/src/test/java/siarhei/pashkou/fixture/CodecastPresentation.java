@@ -5,16 +5,16 @@ import java.util.List;
 import siarhei.pashkou.codecast.ContextSetup;
 import siarhei.pashkou.context.Context;
 import siarhei.pashkou.context.GateKeeper;
-import siarhei.pashkou.context.PresentableCodecast;
 import siarhei.pashkou.model.Codecast;
 import siarhei.pashkou.model.License;
 import siarhei.pashkou.model.User;
 import siarhei.pashkou.model.License.LicenseType;
-import siarhei.pashkou.usecases.PresentCodecastUseCase;
+import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryUseCase;
+import siarhei.pashkou.usecases.codecastsummary.PresentableCodecast;
 
 public class CodecastPresentation {
 	
-	PresentCodecastUseCase useCase = new PresentCodecastUseCase();
+	CodecastSummaryUseCase useCase = new CodecastSummaryUseCase();
 	
 	public CodecastPresentation(){
 		ContextSetup.initializeContext();

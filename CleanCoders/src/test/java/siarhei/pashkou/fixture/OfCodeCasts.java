@@ -5,15 +5,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import siarhei.pashkou.context.Context;
-import siarhei.pashkou.context.PresentableCodecast;
-import siarhei.pashkou.usecases.PresentCodecastUseCase;
+import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryUseCase;
+import siarhei.pashkou.usecases.codecastsummary.PresentableCodecast;
 
 //OrderedQuery
 public class OfCodeCasts {
 	private List<Object> list(Object...objects) { return Arrays.asList(objects);}
 	
 	public List<Object> query(){
-		List<PresentableCodecast> presentableCodecasts = new PresentCodecastUseCase().presentCodecasts(Context.gateKepper.getLogedInUser());
+		List<PresentableCodecast> presentableCodecasts = new CodecastSummaryUseCase().presentCodecasts(Context.gateKepper.getLogedInUser());
 		List<Object> queryResponse = new ArrayList<>();
 		for(PresentableCodecast pC: presentableCodecasts){
 			queryResponse.add(makeRow(pC.title, pC.publishedDate, "picture", "description", pC.isViewable, pC.isDownloadable));

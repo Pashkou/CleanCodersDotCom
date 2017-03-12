@@ -1,8 +1,10 @@
-package siarhei.pashkou.persistence;
+package siarhei.pashkou.utilities;
 
 import java.util.List;
 
 import siarhei.pashkou.model.User;
+import siarhei.pashkou.persistence.UserGateway;
+import siarhei.pashkou.persistence.UserGatewayUtilities;
 
 public class InMemoryUserGateway extends UserGatewayUtilities implements UserGateway {
 

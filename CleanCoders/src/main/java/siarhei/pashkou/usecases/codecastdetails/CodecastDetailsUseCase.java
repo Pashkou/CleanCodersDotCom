@@ -1,12 +1,10 @@
-package siarhei.pashkou.usecases;
-
-import java.util.List;
+package siarhei.pashkou.usecases.codecastdetails;
 
 import siarhei.pashkou.context.Context;
-import siarhei.pashkou.context.PresentableCodecastDetails;
 import siarhei.pashkou.model.Codecast;
-import siarhei.pashkou.model.License;
 import siarhei.pashkou.model.User;
+import siarhei.pashkou.presenter.CodecastPresenter;
+import siarhei.pashkou.usecases.CodecastUseCase;
 
 public class CodecastDetailsUseCase extends CodecastUseCase {
 	private User user;
@@ -15,11 +13,14 @@ public class CodecastDetailsUseCase extends CodecastUseCase {
 	public PresentableCodecastDetails requestCodecastDetails(User logedInUser, String permalink) {
 		PresentableCodecastDetails details = new PresentableCodecastDetails();
 		Codecast codecast = Context.codecastGateway.findCodecastByPermalink(permalink);		
-		details.presentableCodecast = doFormat(logedInUser,codecast);
-		details.permalink = permalink;
-		List<License> license = Context.licenseGateway.findLicenseForUserAndCodecast(logedInUser, codecast);
+		if(codecast != null){
+			details.wasFound = true;
+			details.presentableCodecast = new CodecastPresenter().doFormat(logedInUser,codecast);
+		}else{
+			details.wasFound = false;
+		}
 	
-		return (PresentableCodecastDetails)details;
+		return details;
 	}
 
 }

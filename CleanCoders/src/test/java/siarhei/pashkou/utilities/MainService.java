@@ -1,15 +1,16 @@
 package siarhei.pashkou.utilities;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.List;
 
 import siarhei.pashkou.codecast.ContextSetup;
-import siarhei.pashkou.context.Context;
-import siarhei.pashkou.context.PresentableCodecast;
+import siarhei.pashkou.html.ParsedRequest;
+import siarhei.pashkou.html.RequestParser;
+import siarhei.pashkou.html.Router;
 import siarhei.pashkou.socketservice.SocketService;
-import siarhei.pashkou.usecases.PresentCodecastUseCase;
-import siarhei.pashkou.views.ViewTemplate;
+import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryController;
 
 public class MainService implements SocketService {
 
@@ -24,9 +25,12 @@ public class MainService implements SocketService {
 
 	@Override
 	public void serve(Socket s) {
+		Router router = new Router();
+		router.addPath("", new CodecastSummaryController());
 		try {
-			String frontPage = getFrontPage();
-			String response = makeResponse(frontPage);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			ParsedRequest request = new RequestParser().parse(reader.readLine());
+			String response = router.route(request);
 			s.getOutputStream().write(response.getBytes());
 			s.close();
 		} catch (IOException e) {
@@ -35,34 +39,8 @@ public class MainService implements SocketService {
 		
 	}
 
-	private String makeResponse(String frontPage) {
-		String response = "HTTP/1.0 200 OK\n"+
-				"Content-Length: "+frontPage.length()+"\n"+
-				"\n"+
-				frontPage;
-		return response;
-	}
-
-	private String getFrontPage() throws IOException {
-		PresentCodecastUseCase useCase = new PresentCodecastUseCase();
-		List<PresentableCodecast> codecasts = useCase.presentCodecasts(Context.userGateway.findUserByName("Sergei"));
-		ViewTemplate frontPageTemplate = ViewTemplate.create("html/frontPage.html");
-		
-		StringBuilder codecastView = new StringBuilder();
-		for(PresentableCodecast codecast:codecasts){
-			ViewTemplate codecastTemplate = ViewTemplate.create("html/codecast.html");
-			codecastTemplate.replace("title", codecast.title);	
-			codecastTemplate.replace("publicationDate", codecast.publishedDate);	
-			codecastView.append(codecastTemplate.getContent());
-		}
-		
-		frontPageTemplate.replace("codecasts", codecastView.toString());
-		return frontPageTemplate.getContent();
-	}
-
 	@Override
 	public String getMessage() {
 		return null;
 	}
-
 }

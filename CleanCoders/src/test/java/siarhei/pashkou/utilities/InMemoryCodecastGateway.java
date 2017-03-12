@@ -1,9 +1,11 @@
-package siarhei.pashkou.persistence;
+package siarhei.pashkou.utilities;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import siarhei.pashkou.model.Codecast;
+import siarhei.pashkou.persistence.CodecastGateway;
+import siarhei.pashkou.persistence.CodecastGatewayUtilities;
 
 public class InMemoryCodecastGateway extends CodecastGatewayUtilities implements CodecastGateway {
 

@@ -1,8 +1,8 @@
 package siarhei.pashkou.fixture;
 
 import siarhei.pashkou.context.Context;
-import siarhei.pashkou.context.PresentableCodecastDetails;
-import siarhei.pashkou.usecases.CodecastDetailsUseCase;
+import siarhei.pashkou.usecases.codecastdetails.CodecastDetailsUseCase;
+import siarhei.pashkou.usecases.codecastdetails.PresentableCodecastDetails;
 
 public class CodecastDetails {
 	private PresentableCodecastDetails details;
