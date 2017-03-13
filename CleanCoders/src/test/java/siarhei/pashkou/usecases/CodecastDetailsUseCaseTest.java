@@ -13,7 +13,7 @@ import siarhei.pashkou.context.Context;
 import siarhei.pashkou.model.Codecast;
 import siarhei.pashkou.model.User;
 import siarhei.pashkou.usecases.codecastdetails.CodecastDetailsUseCase;
-import siarhei.pashkou.usecases.codecastdetails.PresentableCodecastDetails;
+import siarhei.pashkou.usecases.codecastdetails.PresentableCodecastDetailsViewModel;
 
 public class CodecastDetailsUseCaseTest {
 	private User user;
@@ -28,7 +28,7 @@ public class CodecastDetailsUseCaseTest {
 	public void createCodecastDetailsPresentation() {
 		Codecast codecast = createSampleDataCodecast();
 		CodecastDetailsUseCase codecastDetailsUseCase = new CodecastDetailsUseCase();
-		PresentableCodecastDetails codecastDetailsPresenter = codecastDetailsUseCase.requestCodecastDetails(user, codecast.getPermalink());
+		PresentableCodecastDetailsViewModel codecastDetailsPresenter = codecastDetailsUseCase.requestCodecastDetails(user, codecast.getPermalink());
 		
 		assertEquals(codecast.getTitle(), codecastDetailsPresenter.presentableCodecast.title);
 		assertEquals(codecast.getPublishedDate().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")).toString(), codecastDetailsPresenter.presentableCodecast.publishedDate.toString());
@@ -38,7 +38,7 @@ public class CodecastDetailsUseCaseTest {
 	@Test
 	public void doesnotCrushOnMissingCodecast() {
 		CodecastDetailsUseCase codecastDetailsUseCase = new CodecastDetailsUseCase();
-		PresentableCodecastDetails codecastDetailsPresenter = codecastDetailsUseCase.requestCodecastDetails(user, "missing");
+		PresentableCodecastDetailsViewModel codecastDetailsPresenter = codecastDetailsUseCase.requestCodecastDetails(user, "missing");
 		
 		assertFalse(codecastDetailsPresenter.wasFound);
 	}

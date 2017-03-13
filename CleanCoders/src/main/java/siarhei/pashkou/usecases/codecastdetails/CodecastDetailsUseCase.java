@@ -10,8 +10,8 @@ public class CodecastDetailsUseCase extends CodecastUseCase {
 	private User user;
 	private String permalink;
 	
-	public PresentableCodecastDetails requestCodecastDetails(User logedInUser, String permalink) {
-		PresentableCodecastDetails details = new PresentableCodecastDetails();
+	public PresentableCodecastDetailsViewModel requestCodecastDetails(User logedInUser, String permalink) {
+		PresentableCodecastDetailsViewModel details = new PresentableCodecastDetailsViewModel();
 		Codecast codecast = Context.codecastGateway.findCodecastByPermalink(permalink);		
 		if(codecast != null){
 			details.wasFound = true;

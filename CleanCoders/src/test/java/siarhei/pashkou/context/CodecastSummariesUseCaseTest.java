@@ -14,12 +14,14 @@ import org.junit.Test;
 import siarhei.pashkou.codecast.ContextSetup;
 import siarhei.pashkou.model.Codecast;
 import siarhei.pashkou.model.License;
-import siarhei.pashkou.model.User;
 import siarhei.pashkou.model.License.LicenseType;
+import siarhei.pashkou.model.User;
+import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryOutputBoundary;
+import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryOutputBoundarySpy;
+import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryResponseModel;
 import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryUseCase;
-import siarhei.pashkou.usecases.codecastsummary.PresentableCodecast;
 
-public class PresentCodecastUseCaseTest {
+public class CodecastSummariesUseCaseTest {
 	private CodecastSummaryUseCase useCase;
 	private User firstUser;
 	private Codecast codecast;
@@ -99,10 +101,10 @@ public class PresentCodecastUseCaseTest {
 		codecast.setPublished(LocalDate.parse("05/03/2017", formatter));
 		
 		Context.codecastGateway.saveCodecast(codecast);
-		List<PresentableCodecast> pCodecasts = useCase.presentCodecasts(firstUser);
+		List<CodecastSummaryResponseModel> pCodecasts = useCase.presentCodecasts(firstUser);
 		assertEquals(1, pCodecasts.size());
 		
-		PresentableCodecast pCodecast = pCodecasts.get(0);
+		CodecastSummaryResponseModel pCodecast = pCodecasts.get(0);
 		assertEquals("This is codecast", pCodecast.title);
 		assertEquals("05/03/2017", pCodecast.publishedDate);
 		
@@ -120,6 +122,14 @@ public class PresentCodecastUseCaseTest {
 		assertTrue(useCase.presentCodecasts(firstUser).get(0).isViewable);
 	}
 
+	@Test
+	public void useCaseWiring(){
+		CodecastSummaryOutputBoundary presenter = new CodecastSummaryOutputBoundarySpy();
+		useCase.summarizeCodecasts(firstUser, presenter);
+		//useCase makes response model
+		//send response model to the presenter
+		//assert something about response model in the presenter
+	}
 
 	
 }

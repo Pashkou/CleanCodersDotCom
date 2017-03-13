@@ -5,6 +5,10 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import siarhei.pashkou.codecast.ContextSetup;
+import siarhei.pashkou.context.Context;
+import siarhei.pashkou.model.User;
+
 public class RouterTest {
 	private ParsedRequest actualRequest;
 	private Router router;
@@ -12,6 +16,7 @@ public class RouterTest {
 	@Before
 	public void setUp(){
 		router = new Router();
+		ContextSetup.setupSampleData();
 	}
 
 	@Test
@@ -49,12 +54,15 @@ public class RouterTest {
 		String result = router.route(new ParsedRequest("GET", "somthing-missing"));
 		assertEquals("HTTP/1.1 404 OK\n", result);
 	}
+	
 	class TestController extends Controller{
+
 		@Override
-		public String handle(ParsedRequest request) {
+		public String handle(ParsedRequest request, User user) {
 			actualRequest = request;
 			return "";
 		}
+
 	}
 
 }

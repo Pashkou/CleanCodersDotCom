@@ -9,19 +9,25 @@ import siarhei.pashkou.model.User;
 import siarhei.pashkou.presenter.CodecastPresenter;
 import siarhei.pashkou.usecases.CodecastUseCase;
 
-public class CodecastSummaryUseCase extends CodecastUseCase {
+public class CodecastSummaryUseCase extends CodecastUseCase implements CodecastSummaryInputBoundary {
 
-	public List<PresentableCodecast> presentCodecasts(User logedInUser) {
+	public List<CodecastSummaryResponseModel> presentCodecasts(User logedInUser) {
 		List<Codecast> codecasts = Context.codecastGateway.findAllCodecastsSortedByDate();
-		List<PresentableCodecast> presentableCodecats = new ArrayList<PresentableCodecast>();
+		List<CodecastSummaryResponseModel> presentableCodecats = new ArrayList<CodecastSummaryResponseModel>();
 		for(Codecast codecast:codecasts){
 			preparePresentationCodecast(logedInUser, presentableCodecats, codecast);
 		}
 		return presentableCodecats;
 	}
 
-	private void preparePresentationCodecast(User logedInUser, List<PresentableCodecast> presentableCodecats, Codecast codecast) {
-		PresentableCodecast pc = new CodecastPresenter().doFormat(logedInUser, codecast);
+	private void preparePresentationCodecast(User logedInUser, List<CodecastSummaryResponseModel> presentableCodecats, Codecast codecast) {
+		CodecastSummaryResponseModel pc = new CodecastPresenter().doFormat(logedInUser, codecast);
 		presentableCodecats.add(pc);
+	}
+
+	@Override
+	public void summarizeCodecasts(User user, CodecastSummaryOutputBoundary presenter) {
+		// TODO Auto-generated method stub
+		
 	}
 }

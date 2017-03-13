@@ -6,11 +6,11 @@ import siarhei.pashkou.model.Codecast;
 import siarhei.pashkou.model.License.LicenseType;
 import siarhei.pashkou.model.User;
 import siarhei.pashkou.usecases.CodecastUseCase;
-import siarhei.pashkou.usecases.codecastsummary.PresentableCodecast;
+import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryResponseModel;
 
 public class CodecastPresenter {
-	public PresentableCodecast doFormat(User logedInUser, Codecast codecast) {
-		PresentableCodecast pc = new PresentableCodecast();
+	public CodecastSummaryResponseModel doFormat(User logedInUser, Codecast codecast) {
+		CodecastSummaryResponseModel pc = new CodecastSummaryResponseModel();
 		pc.isViewable = CodecastUseCase.isLincenseForCodecast(LicenseType.VIEWABLE, logedInUser, codecast);
 		pc.isDownloadable = CodecastUseCase.isLincenseForCodecast(LicenseType.DOWNLOADABLE, logedInUser, codecast);
 		pc.title = codecast.getTitle();

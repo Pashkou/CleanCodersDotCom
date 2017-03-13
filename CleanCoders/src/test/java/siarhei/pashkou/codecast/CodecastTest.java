@@ -21,14 +21,7 @@ public class CodecastTest {
 	public void compareTwoCodecastsWithSameDate(){
 		Codecast codecast = new Codecast();
 		codecast.setPublished(LocalDate.now());
-		System.out.println(LocalDate.now().toString());
 		assertEquals(LocalDate.now(), codecast.getPublishedDate());
 	}
-	
-	@Test
-	public void checkLanguage(){
-		System.out.println(System.getProperty("user.country")); 
-		System.out.println(System.getProperty("user.language"));
-	}
-	
+
 }

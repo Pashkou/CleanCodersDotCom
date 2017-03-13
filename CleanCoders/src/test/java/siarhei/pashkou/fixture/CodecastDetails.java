@@ -2,10 +2,10 @@ package siarhei.pashkou.fixture;
 
 import siarhei.pashkou.context.Context;
 import siarhei.pashkou.usecases.codecastdetails.CodecastDetailsUseCase;
-import siarhei.pashkou.usecases.codecastdetails.PresentableCodecastDetails;
+import siarhei.pashkou.usecases.codecastdetails.PresentableCodecastDetailsViewModel;
 
 public class CodecastDetails {
-	private PresentableCodecastDetails details;
+	private PresentableCodecastDetailsViewModel details;
 
 	public boolean requestCodecast(String permalink){
 		CodecastDetailsUseCase codecastDetailsUseCase = new CodecastDetailsUseCase();

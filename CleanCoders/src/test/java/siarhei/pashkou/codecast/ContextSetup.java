@@ -21,6 +21,8 @@ public class ContextSetup {
 	}
 	
 	public static void setupSampleData(){
+		initializeContext();
+		
 		User user = Context.userGateway.save("Sergei");
 		
 		Codecast episode1 = new Codecast();
@@ -40,5 +42,6 @@ public class ContextSetup {
 		Context.licenseGateway.save(sergeiE1);
 		Context.licenseGateway.save(sergeiE2);
 		
+		Context.gateKepper.setLogedInUser(user);
 	}
 }

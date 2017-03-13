@@ -3,6 +3,8 @@ package siarhei.pashkou.html;
 import java.util.HashMap;
 import java.util.Map;
 
+import siarhei.pashkou.context.Context;
+
 public class Router {
 	private Map<String, Controller> routers = new HashMap();
 
@@ -14,7 +16,9 @@ public class Router {
 		String[] paths = parsedRequest.path.split("/");
 		String controllerKey = paths.length > 1 ? paths[1] : "";
 		Controller controller = routers.get(controllerKey);
-		return controller == null ? "HTTP/1.1 404 OK\n" : controller.handle(parsedRequest);
+		return controller == null ?
+				"HTTP/1.1 404 OK\n" :
+					controller.handle(parsedRequest, Context.gateKepper.getLogedInUser());
 	}
 
 
