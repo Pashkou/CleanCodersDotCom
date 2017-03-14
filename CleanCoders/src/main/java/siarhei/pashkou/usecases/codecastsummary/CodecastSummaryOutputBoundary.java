@@ -2,6 +2,8 @@ package siarhei.pashkou.usecases.codecastsummary;
 
 public interface CodecastSummaryOutputBoundary {
 
-	CodecastSummariesViewModel getVieweModel();
+	CodecastSummariesViewModel getViewModel();
+
+	void present(CodecastSummaryResponseModel codecastSummaryResponseModel);
 
 }

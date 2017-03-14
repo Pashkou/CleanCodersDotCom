@@ -21,7 +21,7 @@ public class CodecastSummaryController extends Controller{
 	@Override
 	public String handle(ParsedRequest request, User user) {
 		useCase.summarizeCodecasts(Context.gateKepper.getLogedInUser(), presenter);
-		view.generateView(presenter.getVieweModel());
+		view.generateView(presenter.getViewModel());
 		return "";
 	}
 

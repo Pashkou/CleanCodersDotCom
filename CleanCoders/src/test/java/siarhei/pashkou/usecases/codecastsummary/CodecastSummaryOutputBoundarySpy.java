@@ -10,8 +10,13 @@ public class CodecastSummaryOutputBoundarySpy implements CodecastSummaryOutputBo
 	}
 
 	@Override
-	public CodecastSummariesViewModel getVieweModel() {
+	public CodecastSummariesViewModel getViewModel() {
 		return viewModel;
+	}
+
+	@Override
+	public void present(CodecastSummaryResponseModel codecastSummaryResponseModel) {
+		responseModel = codecastSummaryResponseModel;
 	}
 
 }

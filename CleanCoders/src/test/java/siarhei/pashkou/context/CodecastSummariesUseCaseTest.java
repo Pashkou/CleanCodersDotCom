@@ -2,11 +2,11 @@ package siarhei.pashkou.context;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,15 +16,15 @@ import siarhei.pashkou.model.Codecast;
 import siarhei.pashkou.model.License;
 import siarhei.pashkou.model.License.LicenseType;
 import siarhei.pashkou.model.User;
-import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryOutputBoundary;
+import siarhei.pashkou.usecases.codecastsummary.CodecastSummary;
 import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryOutputBoundarySpy;
-import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryResponseModel;
 import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryUseCase;
 
 public class CodecastSummariesUseCaseTest {
 	private CodecastSummaryUseCase useCase;
 	private User firstUser;
 	private Codecast codecast;
+	private CodecastSummaryOutputBoundarySpy presenterSpy;
 	
 	@Before
 	public void setUp(){
@@ -33,6 +33,7 @@ public class CodecastSummariesUseCaseTest {
 		codecast = new Codecast();
 		codecast = Context.codecastGateway.saveCodecast(codecast);
 		firstUser = Context.userGateway.save("FirstUser");
+		presenterSpy = new CodecastSummaryOutputBoundarySpy();
 	}
 	
 	@Test
@@ -91,44 +92,59 @@ public class CodecastSummariesUseCaseTest {
 	@Test
 	public void presentNoCodecasts(){
 		Context.codecastGateway.delete(codecast);
-		assertTrue(useCase.presentCodecasts(firstUser).isEmpty());
+		useCase.summarizeCodecasts(firstUser, presenterSpy); 
+		assertTrue(presenterSpy.responseModel.getCodecastSummaries().isEmpty());
 	}
 
 	@Test
 	public void presentOneCodecast(){
 		codecast.setTitle("This is codecast");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		codecast.setPublished(LocalDate.parse("05/03/2017", formatter));
-		
+		LocalDate now = LocalDate.parse("05/03/2017", formatter);
+		codecast.setPublished(now);
+		codecast.setPermalink("permalink");
 		Context.codecastGateway.saveCodecast(codecast);
-		List<CodecastSummaryResponseModel> pCodecasts = useCase.presentCodecasts(firstUser);
-		assertEquals(1, pCodecasts.size());
 		
-		CodecastSummaryResponseModel pCodecast = pCodecasts.get(0);
-		assertEquals("This is codecast", pCodecast.title);
-		assertEquals("05/03/2017", pCodecast.publishedDate);
+		useCase.summarizeCodecasts(firstUser, presenterSpy); 
 		
+		assertEquals(1, presenterSpy.responseModel.getCodecastSummaries().size());
+		CodecastSummary codecastSummary = presenterSpy.responseModel.getCodecastSummaries().get(0);
+		assertEquals("This is codecast", codecastSummary.title);
+		assertEquals(now, codecastSummary.publishedDate);
+		assertEquals("permalink", codecastSummary.permalink);
+		 
 	}
 
 	@Test
 	public void withNoLicenseShowCodecastsNoViewable(){
-		 assertFalse(useCase.presentCodecasts(firstUser).get(0).isViewable);
+		useCase.summarizeCodecasts(firstUser, presenterSpy); 
+		
+		assertFalse(presenterSpy.responseModel.getCodecastSummaries().get(0).isViewable);
 	}
 
 	@Test
 	public void withLicenseShowCodecastsViewable(){
 		License license = new License(LicenseType.VIEWABLE, firstUser, codecast);
 		Context.licenseGateway.save(license);
-		assertTrue(useCase.presentCodecasts(firstUser).get(0).isViewable);
+		useCase.summarizeCodecasts(firstUser, presenterSpy); 
+		assertTrue(presenterSpy.responseModel.getCodecastSummaries().get(0).isViewable);
+		assertFalse(presenterSpy.responseModel.getCodecastSummaries().get(0).isDownloadable);
+	}
+
+	@Test
+	public void withLicenseDownloadCodecastsDownloadable(){
+		License license = new License(LicenseType.DOWNLOADABLE, firstUser, codecast);
+		Context.licenseGateway.save(license);
+		useCase.summarizeCodecasts(firstUser, presenterSpy); 
+		assertTrue(presenterSpy.responseModel.getCodecastSummaries().get(0).isDownloadable);
+		assertFalse(presenterSpy.responseModel.getCodecastSummaries().get(0).isViewable);
 	}
 
 	@Test
 	public void useCaseWiring(){
-		CodecastSummaryOutputBoundary presenter = new CodecastSummaryOutputBoundarySpy();
-		useCase.summarizeCodecasts(firstUser, presenter);
-		//useCase makes response model
-		//send response model to the presenter
-		//assert something about response model in the presenter
+		CodecastSummaryOutputBoundarySpy presenterSpy = new CodecastSummaryOutputBoundarySpy();
+		useCase.summarizeCodecasts(firstUser, presenterSpy); //firstUse ist DTO in this case
+		assertNotNull(presenterSpy.responseModel);
 	}
 
 	

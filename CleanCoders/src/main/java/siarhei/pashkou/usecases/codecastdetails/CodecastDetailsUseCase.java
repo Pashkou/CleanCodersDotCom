@@ -3,7 +3,7 @@ package siarhei.pashkou.usecases.codecastdetails;
 import siarhei.pashkou.context.Context;
 import siarhei.pashkou.model.Codecast;
 import siarhei.pashkou.model.User;
-import siarhei.pashkou.presenter.CodecastPresenter;
+import siarhei.pashkou.presenter.CodecastSummariesPresenter;
 import siarhei.pashkou.usecases.CodecastUseCase;
 
 public class CodecastDetailsUseCase extends CodecastUseCase {
@@ -15,7 +15,7 @@ public class CodecastDetailsUseCase extends CodecastUseCase {
 		Codecast codecast = Context.codecastGateway.findCodecastByPermalink(permalink);		
 		if(codecast != null){
 			details.wasFound = true;
-			details.presentableCodecast = new CodecastPresenter().doFormat(logedInUser,codecast);
+			//details.presentableCodecast = new CodecastSummariesPresenter().doFormat(logedInUser,codecast);
 		}else{
 			details.wasFound = false;
 		}

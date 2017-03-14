@@ -59,9 +59,4 @@ public class CodecastPresentation {
 		return Context.gateKepper.getLogedInUser().getUsername();
 	}
 	
-	
-	public int countOfCodecastsPresented(){	
-		List<CodecastSummaryResponseModel> presentations = useCase.presentCodecasts(Context.gateKepper.getLogedInUser());
-		return presentations.size();
-	}
 }

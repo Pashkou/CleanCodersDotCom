@@ -18,7 +18,7 @@ public class CodecastDetails {
 	}
 	
 	public String codecastDetailsDate(){
-		return details.presentableCodecast.publishedDate;
+		return details.presentableCodecast.publishedDate.toString();
 	}
 	
 	public boolean codecastDetailsOfferPurchaseOf(String licenseType){

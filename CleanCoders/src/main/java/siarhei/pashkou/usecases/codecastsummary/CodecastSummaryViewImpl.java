@@ -13,7 +13,7 @@ public class CodecastSummaryViewImpl implements CodecastSummariesView {
 		for(CodecastSummaryResponseModel presentableCodecast:presentableCodecasts){
 			ViewTemplate codecastTemplate = ViewTemplate.create("html/codecast.html");
 			codecastTemplate.replace("title", presentableCodecast.title);	
-			codecastTemplate.replace("publicationDate", presentableCodecast.publishedDate);	
+			codecastTemplate.replace("publicationDate", presentableCodecast.publishedDate.toString());	
 			codecastTemplate.replace("permalink", presentableCodecast.permalink);	
 			codecastView.append(codecastTemplate.getContent());
 		}
