@@ -7,7 +7,9 @@ import siarhei.pashkou.context.Context;
 import siarhei.pashkou.model.Codecast;
 import siarhei.pashkou.model.License;
 import siarhei.pashkou.model.License.LicenseType;
+import siarhei.pashkou.presenter.CodecastSummariesPresenter;
 import siarhei.pashkou.model.User;
+import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryOutputBoundary;
 import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryResponseModel;
 import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryUseCase;
 
@@ -57,6 +59,12 @@ public class CodecastPresentation {
 	}
 	public String presentationUser(){ 
 		return Context.gateKepper.getLogedInUser().getUsername();
+	}
+	
+	public int countOfCodecastsPresented(){	
+		CodecastSummaryOutputBoundary presenter = new CodecastSummariesPresenter();
+		useCase.summarizeCodecasts(Context.gateKepper.getLogedInUser(), presenter);
+		return presenter.getViewModel().viewModels.size();
 	}
 	
 }

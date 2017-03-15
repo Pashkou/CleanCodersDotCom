@@ -14,16 +14,16 @@ public class CodecastDetails {
 	}
 	
 	public String codecastDetailsTitle(){
-		return details.presentableCodecast.title;
+		return details.presentableCodecast.getCodecastSummaries().get(0).title;
 	}
 	
 	public String codecastDetailsDate(){
-		return details.presentableCodecast.publishedDate.toString();
+		return details.presentableCodecast.getCodecastSummaries().get(0).publishedDate.toString();
 	}
 	
 	public boolean codecastDetailsOfferPurchaseOf(String licenseType){
 		return 
-				   (  (  licenseType.equals("viewing") && !details.presentableCodecast.isViewable  ) ||
-					  (  licenseType.equals("download") && !details.presentableCodecast.isDownloadable ));
+				   (  (  licenseType.equals("viewing") && !details.presentableCodecast.getCodecastSummaries().get(0).isViewable  ) ||
+					  (  licenseType.equals("download") && !details.presentableCodecast.getCodecastSummaries().get(0).isDownloadable ));
 	}
 }
