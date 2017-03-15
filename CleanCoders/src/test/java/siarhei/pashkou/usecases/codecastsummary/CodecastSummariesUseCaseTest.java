@@ -1,4 +1,4 @@
-package siarhei.pashkou.context;
+package siarhei.pashkou.usecases.codecastsummary;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -12,19 +12,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 import siarhei.pashkou.codecast.ContextSetup;
+import siarhei.pashkou.context.Context;
 import siarhei.pashkou.model.Codecast;
 import siarhei.pashkou.model.License;
 import siarhei.pashkou.model.License.LicenseType;
 import siarhei.pashkou.model.User;
-import siarhei.pashkou.usecases.codecastsummary.CodecastSummary;
-import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryOutputBoundarySpy;
-import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryUseCase;
+import siarhei.pashkou.usecases.RequestModel;
 
 public class CodecastSummariesUseCaseTest {
 	private CodecastSummaryUseCase useCase;
 	private User firstUser;
 	private Codecast codecast;
 	private CodecastSummaryOutputBoundarySpy presenterSpy;
+	private RequestModel requestModel;
 	
 	@Before
 	public void setUp(){
@@ -34,6 +34,8 @@ public class CodecastSummariesUseCaseTest {
 		codecast = Context.codecastGateway.saveCodecast(codecast);
 		firstUser = Context.userGateway.save("FirstUser");
 		presenterSpy = new CodecastSummaryOutputBoundarySpy();
+		requestModel = new RequestModel();
+		requestModel.logedInUser = firstUser;
 	}
 	
 	@Test
@@ -92,7 +94,7 @@ public class CodecastSummariesUseCaseTest {
 	@Test
 	public void presentNoCodecasts(){
 		Context.codecastGateway.delete(codecast);
-		useCase.summarizeCodecasts(firstUser, presenterSpy); 
+		useCase.execute(requestModel, presenterSpy); 
 		assertTrue(presenterSpy.responseModel.getCodecastSummaries().isEmpty());
 	}
 
@@ -105,7 +107,7 @@ public class CodecastSummariesUseCaseTest {
 		codecast.setPermalink("permalink");
 		Context.codecastGateway.saveCodecast(codecast);
 		
-		useCase.summarizeCodecasts(firstUser, presenterSpy); 
+		useCase.execute(requestModel, presenterSpy); 
 		
 		assertEquals(1, presenterSpy.responseModel.getCodecastSummaries().size());
 		CodecastSummary codecastSummary = presenterSpy.responseModel.getCodecastSummaries().get(0);
@@ -117,7 +119,7 @@ public class CodecastSummariesUseCaseTest {
 
 	@Test
 	public void withNoLicenseShowCodecastsNoViewable(){
-		useCase.summarizeCodecasts(firstUser, presenterSpy); 
+		useCase.execute(requestModel, presenterSpy); 
 		
 		assertFalse(presenterSpy.responseModel.getCodecastSummaries().get(0).isViewable);
 	}
@@ -126,7 +128,7 @@ public class CodecastSummariesUseCaseTest {
 	public void withLicenseShowCodecastsViewable(){
 		License license = new License(LicenseType.VIEWABLE, firstUser, codecast);
 		Context.licenseGateway.save(license);
-		useCase.summarizeCodecasts(firstUser, presenterSpy); 
+		useCase.execute(requestModel, presenterSpy); 
 		assertTrue(presenterSpy.responseModel.getCodecastSummaries().get(0).isViewable);
 		assertFalse(presenterSpy.responseModel.getCodecastSummaries().get(0).isDownloadable);
 	}
@@ -135,7 +137,7 @@ public class CodecastSummariesUseCaseTest {
 	public void withLicenseDownloadCodecastsDownloadable(){
 		License license = new License(LicenseType.DOWNLOADABLE, firstUser, codecast);
 		Context.licenseGateway.save(license);
-		useCase.summarizeCodecasts(firstUser, presenterSpy); 
+		useCase.execute(requestModel, presenterSpy); 
 		assertTrue(presenterSpy.responseModel.getCodecastSummaries().get(0).isDownloadable);
 		assertFalse(presenterSpy.responseModel.getCodecastSummaries().get(0).isViewable);
 	}
@@ -143,7 +145,7 @@ public class CodecastSummariesUseCaseTest {
 	@Test
 	public void useCaseWiring(){
 		CodecastSummaryOutputBoundarySpy presenterSpy = new CodecastSummaryOutputBoundarySpy();
-		useCase.summarizeCodecasts(firstUser, presenterSpy); //firstUse ist DTO in this case
+		useCase.execute(requestModel, presenterSpy); //firstUse is DTO in this case
 		assertNotNull(presenterSpy.responseModel);
 	}
 

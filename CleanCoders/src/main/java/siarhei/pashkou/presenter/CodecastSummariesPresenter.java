@@ -5,24 +5,15 @@ import java.time.format.DateTimeFormatter;
 import siarhei.pashkou.model.Codecast;
 import siarhei.pashkou.model.License.LicenseType;
 import siarhei.pashkou.model.User;
+import siarhei.pashkou.usecases.CodecastOutputBoundary;
+import siarhei.pashkou.usecases.CodecastResponseModel;
 import siarhei.pashkou.usecases.CodecastUseCase;
 import siarhei.pashkou.usecases.codecastsummary.CodecastSummariesViewModel;
 import siarhei.pashkou.usecases.codecastsummary.CodecastSummary;
-import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryOutputBoundary;
 import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryResponseModel;
 
-public class CodecastSummariesPresenter implements CodecastSummaryOutputBoundary {
+public class CodecastSummariesPresenter implements CodecastOutputBoundary<CodecastSummariesViewModel, CodecastSummaryResponseModel> {
 	private CodecastSummariesViewModel codecastSummariesViewModel = new CodecastSummariesViewModel(); 
-	
-	/*public CodecastSummaryResponseModel doFormat(User logedInUser, Codecast codecast) {
-		CodecastSummaryResponseModel pc = new CodecastSummaryResponseModel();
-		pc.isViewable = CodecastUseCase.isLincenseForCodecast(LicenseType.VIEWABLE, logedInUser, codecast);
-		pc.isDownloadable = CodecastUseCase.isLincenseForCodecast(LicenseType.DOWNLOADABLE, logedInUser, codecast);
-		pc.title = codecast.getTitle();
-		pc.permalink = codecast.getPermalink();
-		pc.publishedDate = codecast.getPublishedDate();
-		return pc;
-	}*/
 
 	@Override
 	public CodecastSummariesViewModel getViewModel() {
@@ -43,3 +34,13 @@ public class CodecastSummariesPresenter implements CodecastSummaryOutputBoundary
 
 	}
 }
+
+/*public CodecastSummaryResponseModel doFormat(User logedInUser, Codecast codecast) {
+		CodecastSummaryResponseModel pc = new CodecastSummaryResponseModel();
+		pc.isViewable = CodecastUseCase.isLincenseForCodecast(LicenseType.VIEWABLE, logedInUser, codecast);
+		pc.isDownloadable = CodecastUseCase.isLincenseForCodecast(LicenseType.DOWNLOADABLE, logedInUser, codecast);
+		pc.title = codecast.getTitle();
+		pc.permalink = codecast.getPermalink();
+		pc.publishedDate = codecast.getPublishedDate();
+		return pc;
+	}*/

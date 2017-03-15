@@ -3,6 +3,6 @@ package siarhei.pashkou.usecases.codecastdetails;
 import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryResponseModel;
 
 public class PresentableCodecastDetailsViewModel {
-	public CodecastSummaryResponseModel presentableCodecast = new CodecastSummaryResponseModel();
+	public CodecastDetailsResponseModel presentableCodecast = new CodecastDetailsResponseModel();
 	public boolean wasFound;
 }

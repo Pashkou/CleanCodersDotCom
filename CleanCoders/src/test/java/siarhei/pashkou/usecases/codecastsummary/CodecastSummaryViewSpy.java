@@ -1,6 +1,8 @@
 package siarhei.pashkou.usecases.codecastsummary;
 
-public class CodecastSummaryViewSpy implements CodecastSummariesView {
+import siarhei.pashkou.usecases.CodecastView;
+
+public class CodecastSummaryViewSpy implements CodecastView<CodecastSummariesViewModel> {
 	public CodecastSummariesViewModel viewModel;
 	public boolean generateViewWasCalled;
 	@Override

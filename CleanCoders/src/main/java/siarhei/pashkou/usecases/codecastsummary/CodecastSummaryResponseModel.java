@@ -3,7 +3,9 @@ package siarhei.pashkou.usecases.codecastsummary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CodecastSummaryResponseModel {
+import siarhei.pashkou.usecases.CodecastResponseModel;
+
+public class CodecastSummaryResponseModel extends CodecastResponseModel{
 	private List<CodecastSummary> codeCastSummaries;
 	
 	public CodecastSummaryResponseModel(){

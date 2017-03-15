@@ -7,6 +7,7 @@ import java.util.List;
 import siarhei.pashkou.context.Context;
 import siarhei.pashkou.presenter.CodecastSummariesPresenter;
 import siarhei.pashkou.presenter.CodecastSummaryViewModel;
+import siarhei.pashkou.usecases.RequestModel;
 import siarhei.pashkou.usecases.codecastsummary.CodecastSummary;
 import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryUseCase;
 
@@ -16,10 +17,11 @@ public class OfCodeCasts {
 	
 	public List<Object> query(){
 		CodecastSummaryUseCase useCase = new CodecastSummaryUseCase();
-		
 		CodecastSummariesPresenter presenter = new CodecastSummariesPresenter();
+		RequestModel request = new RequestModel();
+		request.logedInUser = Context.gateKepper.getLogedInUser();
 		
-		useCase.summarizeCodecasts(Context.gateKepper.getLogedInUser(), presenter);
+		useCase.execute(request, presenter);
 		
 		List<CodecastSummaryViewModel> codecastSummaryViewModels = presenter.getViewModel().viewModels;
 		

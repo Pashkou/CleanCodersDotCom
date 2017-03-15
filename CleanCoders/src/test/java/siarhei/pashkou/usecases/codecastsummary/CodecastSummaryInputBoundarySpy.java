@@ -1,18 +1,21 @@
 package siarhei.pashkou.usecases.codecastsummary;
 
 import siarhei.pashkou.model.User;
+import siarhei.pashkou.usecases.CodecastInputBoundary;
+import siarhei.pashkou.usecases.CodecastOutputBoundary;
+import siarhei.pashkou.usecases.RequestModel;
 
-public class CodecastSummaryInputBoundarySpy implements CodecastSummaryInputBoundary {
+public class CodecastSummaryInputBoundarySpy implements CodecastInputBoundary {
 
 	public boolean summarizeCodecastsWasCalled = false;
 	public User requestedUser;
-	public CodecastSummaryOutputBoundary outputBoundary;
+	public CodecastOutputBoundary outputBoundary;
 
 
 	@Override
-	public void summarizeCodecasts(User user, CodecastSummaryOutputBoundary presenter) {
+	public void execute(RequestModel requestModel, CodecastOutputBoundary presenter) {
 		summarizeCodecastsWasCalled = true;
-		requestedUser = user;
+		requestedUser = requestModel.logedInUser;
 		outputBoundary = presenter;
 	}
 		

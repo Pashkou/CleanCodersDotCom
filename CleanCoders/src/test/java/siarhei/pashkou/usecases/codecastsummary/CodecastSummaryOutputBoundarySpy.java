@@ -1,6 +1,8 @@
 package siarhei.pashkou.usecases.codecastsummary;
 
-public class CodecastSummaryOutputBoundarySpy implements CodecastSummaryOutputBoundary {
+import siarhei.pashkou.usecases.CodecastOutputBoundary;
+
+public class CodecastSummaryOutputBoundarySpy implements CodecastOutputBoundary<CodecastSummariesViewModel, CodecastSummaryResponseModel> {
 
 	public CodecastSummaryResponseModel responseModel;
 	public CodecastSummariesViewModel viewModel;

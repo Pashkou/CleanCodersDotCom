@@ -9,21 +9,22 @@ public class CodecastDetails {
 
 	public boolean requestCodecast(String permalink){
 		CodecastDetailsUseCase codecastDetailsUseCase = new CodecastDetailsUseCase();
-		details = codecastDetailsUseCase.requestCodecastDetails(Context.gateKepper.getLogedInUser(), permalink);
+		//details = codecastDetailsUseCase.requestCodecastDetails(Context.gateKepper.getLogedInUser(), permalink);
 		return true;
 	}
 	
 	public String codecastDetailsTitle(){
-		return details.presentableCodecast.getCodecastSummaries().get(0).title;
+		return null;
 	}
 	
 	public String codecastDetailsDate(){
-		return details.presentableCodecast.getCodecastSummaries().get(0).publishedDate.toString();
+		return null;
 	}
 	
 	public boolean codecastDetailsOfferPurchaseOf(String licenseType){
-		return 
-				   (  (  licenseType.equals("viewing") && !details.presentableCodecast.getCodecastSummaries().get(0).isViewable  ) ||
-					  (  licenseType.equals("download") && !details.presentableCodecast.getCodecastSummaries().get(0).isDownloadable ));
+		/*return 
+				   (  (  licenseType.equals("viewing") && !details.presentableCodecast.isViewable  ) ||
+					  (  licenseType.equals("download") && !details.presentableCodecast.isDownloadable ));*/
+		return false;
 	}
 }

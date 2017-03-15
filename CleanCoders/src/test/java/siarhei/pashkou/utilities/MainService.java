@@ -11,9 +11,10 @@ import siarhei.pashkou.html.RequestParser;
 import siarhei.pashkou.html.Router;
 import siarhei.pashkou.presenter.CodecastSummariesPresenter;
 import siarhei.pashkou.socketservice.SocketService;
-import siarhei.pashkou.usecases.codecastsummary.CodecastSummariesView;
+import siarhei.pashkou.usecases.CodecastOutputBoundary;
+import siarhei.pashkou.usecases.CodecastView;
+import siarhei.pashkou.usecases.codecastsummary.CodecastSummariesViewModel;
 import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryController;
-import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryOutputBoundary;
 import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryUseCase;
 import siarhei.pashkou.usecases.codecastsummary.CodecastSummaryViewImpl;
 
@@ -32,8 +33,8 @@ public class MainService implements SocketService {
 	public void serve(Socket s) {
 		Router router = new Router();
 		CodecastSummaryUseCase useCase = new CodecastSummaryUseCase();
-		CodecastSummaryOutputBoundary presenter = new CodecastSummariesPresenter();
-		CodecastSummariesView view = new CodecastSummaryViewImpl();
+		CodecastOutputBoundary presenter = new CodecastSummariesPresenter();
+		CodecastView<CodecastSummariesViewModel> view = new CodecastSummaryViewImpl();
 		router.addPath("", new CodecastSummaryController(useCase, presenter, view));
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
